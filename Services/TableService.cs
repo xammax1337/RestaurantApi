@@ -18,9 +18,9 @@ namespace RestaurantApi.Services
             return await _tableRepository.GetAvailableTableAsync(seatsRequired);
         }
 
-        public async Task UpdateTableAsync(int tableId)
+        public async Task UpdateTableAsync(Table table)
         {
-            await _tableRepository.UpdateTableAsync(tableId);
+            await _tableRepository.UpdateTableAsync(table);
         }
 
         public async Task AddTableAsync(Table table)

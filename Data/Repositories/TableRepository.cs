@@ -24,10 +24,10 @@ namespace RestaurantApi.Data.Repositories
             return availableTables;
         }
 
-        public async Task UpdateTableAsync(int tableId)
+        public async Task UpdateTableAsync(Table table)
         {
-            //_context.Tables.Update(tableId);
-            //await _context.SaveChangesAsync();
+            _context.Tables.Update(table);
+            await _context.SaveChangesAsync();
         } 
 
         public async Task AddTableAsync(Table table)
