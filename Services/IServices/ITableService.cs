@@ -1,4 +1,5 @@
 ﻿using RestaurantApi.Models;
+using RestaurantApi.Models.DTOs;
 
 namespace RestaurantApi.Services.IServices
 {
@@ -6,7 +7,7 @@ namespace RestaurantApi.Services.IServices
     {
         Task<Table> GetAvailableTableAsync(int seatsRequired);
         Task UpdateTableAsync(Table table);
-        Task AddTableAsync(Table table);
+        Task AddTableAsync(TableDTO table);
         Task DeleteTableAsync(int tableId);
     }
 }

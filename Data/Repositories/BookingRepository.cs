@@ -42,8 +42,8 @@ namespace RestaurantApi.Data.Repositories
         public async Task<Booking> GetBookingByCustomerAsync(string customerName)
         {
             var booking = await _context.Bookings
-                .Include(b => b.Customers)
-                .FirstOrDefaultAsync(b => b.Customers.Any(c => c.LastName == customerName));
+                .Include(b => b.Customer)
+                .FirstOrDefaultAsync(b => b.Customer.LastName == customerName);
 
             return booking;
         }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using RestaurantApi.Data.Repositories.IRepositories;
 using RestaurantApi.Models;
+using RestaurantApi.Models.DTOs;
 using RestaurantApi.Services.IServices;
 
 namespace RestaurantApi.Services
@@ -23,9 +24,15 @@ namespace RestaurantApi.Services
             await _tableRepository.UpdateTableAsync(table);
         }
 
-        public async Task AddTableAsync(Table table)
+        public async Task AddTableAsync(TableDTO table)
         {
-            await _tableRepository.AddTableAsync(table);
+            var newTable = new Table
+            {
+                TableNumber = table.TableNumber,
+                Seats = table.Seats,
+                Available = table.Available,
+            };
+            await _tableRepository.AddTableAsync(newTable);
         }
 
         public async Task DeleteTableAsync(int tableId)

@@ -18,7 +18,7 @@ namespace RestaurantApi.Controllers
 
         [Route("AddTable")]
         [HttpPost]
-        public async Task<ActionResult> AddTable(Table table)
+        public async Task<ActionResult> AddTable(TableDTO table)
         {
             await _tableService.AddTableAsync(table);
             return Ok();
@@ -29,14 +29,6 @@ namespace RestaurantApi.Controllers
         public async Task<ActionResult> DeleteTable(int tableId)
         {
             await _tableService.DeleteTableAsync(tableId);
-            return Ok();
-        }
-
-        [Route("UpdateTable")]
-        [HttpPost]
-        public async Task<ActionResult> UpdateTable(int tableId)
-        {
-            await _tableService.UpdateTableAsync(tableId);
             return Ok();
         }
     }

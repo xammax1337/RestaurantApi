@@ -36,7 +36,7 @@ namespace RestaurantApi.Services
                 CustomerCount = seatsRequired,
                 TableId = table.TableId,
                 Table = table,
-                Customers = (ICollection<Customer>)customer
+                Customer = customer
             };
             
             await _bookingRepository.AddBookingAsync(booking);
