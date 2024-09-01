@@ -14,11 +14,7 @@
 
 #### POST
 ##### Parameters
-
-| Name | Located in | Description | Required | Schema |
-| ---- | ---------- | ----------- | -------- | ---- |
-| id | query |  | No | integer |
-
+int Id
 ##### Responses
 
 | Code | Description |
