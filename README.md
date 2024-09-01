@@ -25,10 +25,26 @@ int Id
 
 #### GET
 ##### Responses
-
-| Code | Description |
-| ---- | ----------- |
-| 200 | Success |
+[
+  {
+    "id": 1,
+    "timeBooked": "2024-08-28T12:19:16.687",
+    "customerCount": 1,
+    "tableId": 2,
+    "table": null,
+    "customerId": 2,
+    "customer": null
+  },
+  {
+    "id": 2,
+    "timeBooked": "2024-09-01T15:30:20.87",
+    "customerCount": 4,
+    "tableId": 3,
+    "table": null,
+    "customerId": 2,
+    "customer": null
+  }
+]
 
 ### /api/Booking/GetBookingById
 
