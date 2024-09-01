@@ -61,16 +61,16 @@ namespace RestaurantApi.Services
             };
         }
 
-        public async Task UpdateMenuItemAsync(MenuItemDTO menuItem)
+        public async Task UpdateMenuItemAsync(int id, MenuItemDTO updatedMenuItem)
         {
-            var updateMenuItem = new MenuItem
-            {
-                Name = menuItem.Name,
-                Description = menuItem.Description,
-                Price = menuItem.Price,
-                Available = menuItem.Available,
-            };
-            await _menuItemRepo.UpdateMenuItemAsync(updateMenuItem);
+            var menuItem = await _menuItemRepo.GetMenuItemByIdAsync(id);
+            
+            menuItem.Name = updatedMenuItem.Name;
+            menuItem.Description = updatedMenuItem.Description;
+            menuItem.Price = updatedMenuItem.Price;
+            menuItem.Available = updatedMenuItem.Available;
+
+            await _menuItemRepo.UpdateMenuItemAsync(menuItem);
         }
     }
 }

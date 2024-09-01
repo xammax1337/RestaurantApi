@@ -39,5 +39,18 @@ namespace RestaurantApi.Services
         {
             await _tableRepository.DeleteTableAsync(tableId);
         }
+
+        public async Task<IEnumerable<Table>> GetAllTablesAsync()
+        {
+            var allTables = await _tableRepository.GetAllTablesAsync();
+
+            return allTables.Select(t => new Table
+            {
+                TableId = t.TableId,
+                TableNumber = t.TableNumber,
+                Seats = t.Seats,
+                Available = t.Available,
+            }).ToList();
+        }
     }
 }

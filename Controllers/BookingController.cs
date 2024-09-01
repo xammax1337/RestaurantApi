@@ -17,8 +17,9 @@ namespace RestaurantApi.Controllers
             _bookingService = bookingService;
         }
 
+        [Route("CreateBooking")]
         [HttpPost]
-        public async Task<IActionResult> CreateBooking([FromBody] CreateBookingRequest request)
+        public async Task<ActionResult> CreateBooking([FromBody] CreateBookingRequest request)
         {
             try
             {
@@ -33,6 +34,46 @@ namespace RestaurantApi.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [Route("DeleteBooking")]
+        [HttpPost]
+        public async Task<ActionResult> DeleteBooking(int id)
+        {
+            await _bookingService.DeleteBookingAsync(id);
+            return Ok();
+        }
+
+        [Route("GetAllBookings")]
+        [HttpGet]
+        public async Task<ActionResult> GetAllBookings()
+        {
+            var bookings = await _bookingService.GetAllBookingsAsync();
+            return Ok(bookings);
+        }
+
+        [Route("GetBookingById")]
+        [HttpGet]
+        public async Task<ActionResult> GetBookingById(int id)
+        {
+            var booking = await _bookingService.GetBookingByIdAsync(id);
+            return Ok(booking);
+        }
+
+        [Route("GetBookingByCustomer")]
+        [HttpGet]
+        public async Task<ActionResult> GetBookingByCustomer(string name)
+        {
+            var booking = await _bookingService.GetBookingByCustomerAsync(name);
+            return Ok(booking);
+        }
+
+        [Route("GetBookingByTable")]
+        [HttpGet]
+        public async Task<ActionResult> GetBookingByTable(int tableNumber)
+        {
+            var booking = await _bookingService.GetBookingByTableAsync(tableNumber);
+            return Ok(booking);
         }
     }
 }

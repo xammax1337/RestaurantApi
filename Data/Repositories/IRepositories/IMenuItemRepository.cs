@@ -9,6 +9,7 @@ namespace RestaurantApi.Data.Repositories.IRepositories
         Task<IEnumerable<MenuItem>> GetAllMenuItemsAsync();
         Task<MenuItem> GetMenuItemByIdAsync(int id);
         Task UpdateMenuItemAsync(MenuItem menuItem);
+
         //Task AddMenuItemToMenuAsync(int menuItemId, int menuId);
     }
 }

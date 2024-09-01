@@ -9,6 +9,6 @@ namespace RestaurantApi.Services.IServices
         Task DeleteMenuItemAsync(int id);
         Task<IEnumerable<MenuItemDTO>> GetAllMenuItemsAsync();
         Task<MenuItem> GetMenuItemByIdAsync(int id);
-        Task UpdateMenuItemAsync(MenuItemDTO menuItem);
+        Task UpdateMenuItemAsync(int id, MenuItemDTO updatedMenuItem);
     }
 }

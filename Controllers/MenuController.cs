@@ -51,9 +51,9 @@ namespace RestaurantApi.Controllers
 
         [Route("UpdateMenuItem")]
         [HttpPost]
-        public async Task<ActionResult> UpdateMenuItem(MenuItemDTO menuItem)
+        public async Task<ActionResult> UpdateMenuItem(int id, MenuItemDTO updatedMenuItem)
         {
-            await _menuItemService.UpdateMenuItemAsync(menuItem);
+            await _menuItemService.UpdateMenuItemAsync(id, updatedMenuItem);
             return Ok();
         }
     }

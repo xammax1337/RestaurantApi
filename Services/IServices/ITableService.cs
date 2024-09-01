@@ -9,5 +9,6 @@ namespace RestaurantApi.Services.IServices
         Task UpdateTableAsync(Table table);
         Task AddTableAsync(TableDTO table);
         Task DeleteTableAsync(int tableId);
+        Task <IEnumerable<Table>>GetAllTablesAsync();
     }
 }

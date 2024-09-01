@@ -1,4 +1,5 @@
 ﻿using RestaurantApi.Models;
+using RestaurantApi.Models.DTOs;
 
 namespace RestaurantApi.Data.Repositories.IRepositories
 {
@@ -8,5 +9,6 @@ namespace RestaurantApi.Data.Repositories.IRepositories
         Task UpdateTableAsync(Table table);
         Task AddTableAsync(Table table);
         Task DeleteTableAsync(int tableId);
+        Task <IEnumerable<Table>> GetAllTablesAsync();
     }
 }

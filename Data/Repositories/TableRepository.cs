@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantApi.Data.Repositories.IRepositories;
 using RestaurantApi.Models;
+using RestaurantApi.Models.DTOs;
 
 namespace RestaurantApi.Data.Repositories
 {
@@ -44,6 +45,12 @@ namespace RestaurantApi.Data.Repositories
                 _context.Tables.Remove(deleteTable);
             }
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Table>> GetAllTablesAsync()
+        {
+            var allTables = await _context.Tables.ToListAsync();
+            return allTables;
         }
     }
 }

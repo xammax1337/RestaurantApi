@@ -31,5 +31,13 @@ namespace RestaurantApi.Controllers
             await _tableService.DeleteTableAsync(tableId);
             return Ok();
         }
+
+        [Route("GetAllTables")]
+        [HttpGet]
+        public async Task<ActionResult> GetAllTables()
+        {
+            var allTables = await _tableService.GetAllTablesAsync();
+            return Ok(allTables);
+        }
     }
 }
