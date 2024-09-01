@@ -17,6 +17,7 @@ int Id
 #### GET
 ##### Responses
 Example:
+
 [
   {
     "id": 1,
@@ -47,6 +48,7 @@ Example:
 int Id
 ##### Responses
 Example:
+
 {
   "id": 1,
   "timeBooked": "2024-08-28T12:19:16.687",
@@ -75,6 +77,7 @@ int Id
 #### GET
 ##### Responses
 Example:
+
 [
   {
     "customerId": 2,
@@ -102,6 +105,8 @@ Example:
 ##### Parameters
 int Id
 ##### Responses
+Example:
+
   {
     "customerId": 2,
     "firstName": "John",
@@ -133,6 +138,7 @@ int Id
 #### GET
 ##### Responses
 Example:
+
 [
   {
     "id": 1,
@@ -158,6 +164,8 @@ Example:
 ##### Parameters
 int Id
 ##### Responses
+Example:
+
 {
   "id": 1,
   "name": "Cheeseburger",
@@ -193,6 +201,7 @@ int Id
 #### GET
 ##### Responses
 Example:
+
 [
   {
     "tableId": 2,
