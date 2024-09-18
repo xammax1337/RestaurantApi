@@ -62,6 +62,25 @@ namespace RestaurantApi.Services
             };
         }
 
+        public async Task<CustomerDTO> GetCustomerByEmailAsync(string email)
+        {
+            var customer = await _customerRepo.GetCustomerByEmailAsync(email);
+
+            if (customer == null)
+            {
+                return null;
+            }
+
+            return new CustomerDTO
+            {
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                Email = customer.Email,
+                PhoneNumber = customer.PhoneNumber,
+                Bookings = customer.Bookings
+            };
+        }
+
         public async Task UpdateCustomerAsync(CustomerDTO customer)
         {
             var updateCustomer = new Customer

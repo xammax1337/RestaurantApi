@@ -39,6 +39,14 @@ namespace RestaurantApi.Data.Repositories
             return customer;
         }
 
+        public async Task<Customer> GetCustomerByEmailAsync(string email)
+        {
+            var customer = await _context.Customers
+                .Where(c => c.Email == email)
+                .FirstOrDefaultAsync();
+            return customer;
+        }
+
         public Task UpdateCustomerAsync(Customer customer)
         {
             _context.Customers.Update(customer);

@@ -9,6 +9,7 @@ namespace RestaurantApi.Services.IServices
         Task DeleteCustomerAsync(int id);
         Task<IEnumerable<CustomerDTO>> GetAllCustomersAsync();
         Task<CustomerDTO> GetCustomerByIdAsync(int id);
+        Task<CustomerDTO> GetCustomerByEmailAsync(string email);
         Task UpdateCustomerAsync(CustomerDTO customer);
     }
 }

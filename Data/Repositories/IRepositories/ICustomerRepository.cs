@@ -8,6 +8,7 @@ namespace RestaurantApi.Data.Repositories.IRepositories
         Task DeleteCustomerAsync(int id);
         Task<IEnumerable<Customer>> GetAllCustomersAsync();
         Task<Customer> GetCustomerByIdAsync(int id);
+        Task<Customer> GetCustomerByEmailAsync(string email);
         Task UpdateCustomerAsync(Customer customer);
     }
 }

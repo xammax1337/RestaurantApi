@@ -15,6 +15,17 @@ builder.Services.AddDbContext<RestaurantContext>(options =>
 });
 
 builder.Services.AddControllers();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("React", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -33,6 +44,8 @@ builder.Services.AddScoped<IMenuItemService, MenuItemService>();
 
 
 var app = builder.Build();
+
+app.UseCors("React");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

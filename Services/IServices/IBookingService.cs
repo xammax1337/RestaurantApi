@@ -4,7 +4,7 @@ namespace RestaurantApi.Services.IServices
 {
     public interface IBookingService
     {
-        Task CreateBookingAsync(int customerId, DateTime bookingTime, int seatsRequired);
+        Task CreateBookingAsync(string email, DateTime bookingTime, int seatsRequired);
         Task AddBookingAsync(Booking booking);
         Task DeleteBookingAsync(int id);
         Task<IEnumerable<Booking>> GetAllBookingsAsync();

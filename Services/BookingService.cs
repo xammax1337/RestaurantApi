@@ -16,12 +16,15 @@ namespace RestaurantApi.Services
             _customerRepository = customerRepository;
         }
         
-        public async Task CreateBookingAsync(int customerId, DateTime bookingTime, int seatsRequired)
+        public async Task CreateBookingAsync(string email, DateTime bookingTime, int seatsRequired)
         {
-            var customer = await _customerRepository.GetCustomerByIdAsync(customerId);
+            var customer = await _customerRepository.GetCustomerByEmailAsync(email);
+
+            //Creates a new customer with the email and connects it with the booking.
             if (customer == null)
             {
-                throw new KeyNotFoundException($"Customer {customerId} not found");
+                customer = new Customer { Email = email, };
+                await _customerRepository.AddCustomerAsync(customer);
             }
 
             var table = await _tableRepository.GetAvailableTableAsync(seatsRequired);
