@@ -1,5 +1,6 @@
 ﻿using RestaurantApi.Data.Repositories.IRepositories;
 using RestaurantApi.Models;
+using RestaurantApi.Models.DTOs;
 using RestaurantApi.Services.IServices;
 
 namespace RestaurantApi.Services
@@ -58,9 +59,30 @@ namespace RestaurantApi.Services
             await _bookingRepository.DeleteBookingAsync(id);
         }
 
-        public async Task<IEnumerable<Booking>> GetAllBookingsAsync()
+        public async Task<IEnumerable<BookingDTO>> GetAllBookingsAsync()
         {
-            return await _bookingRepository.GetAllBookingsAsync();
+            var bookings = await _bookingRepository.GetAllBookingsAsync();
+
+            return bookings.Select(b => new BookingDTO
+            {
+                Id = b.Id,
+                TimeBooked = b.TimeBooked,
+                CustomerCount = b.CustomerCount,
+                TableId = b.TableId,
+                Table = b.Table != null ? new TableDTO
+                {
+                    TableNumber = b.Table.TableNumber,
+                    Seats = b.Table.Seats
+                } : null,
+                CustomerId = b.CustomerId,
+                Customer = b.Customer != null ? new CustomerDTO
+                {
+                    FirstName = b.Customer.FirstName,
+                    LastName = b.Customer.LastName,
+                    Email = b.Customer.Email,
+                    PhoneNumber = b.Customer.PhoneNumber
+                } : null
+            });;
         }
 
         public async Task<Booking> GetBookingByIdAsync(int id)

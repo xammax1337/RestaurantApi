@@ -1,4 +1,5 @@
 ﻿using RestaurantApi.Models;
+using RestaurantApi.Models.DTOs;
 
 namespace RestaurantApi.Services.IServices
 {
@@ -7,7 +8,7 @@ namespace RestaurantApi.Services.IServices
         Task CreateBookingAsync(string email, DateTime bookingTime, int seatsRequired);
         Task AddBookingAsync(Booking booking);
         Task DeleteBookingAsync(int id);
-        Task<IEnumerable<Booking>> GetAllBookingsAsync();
+        Task<IEnumerable<BookingDTO>> GetAllBookingsAsync();
         Task<Booking> GetBookingByIdAsync(int id);
         Task<Booking> GetBookingByCustomerAsync(string customerName);
         Task<Booking> GetBookingByTableAsync(int tableNumber);

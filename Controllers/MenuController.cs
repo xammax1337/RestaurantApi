@@ -25,8 +25,8 @@ namespace RestaurantApi.Controllers
             return Ok();
         }        
         
-        [Route("DeleteMenuItem")]
-        [HttpPost]
+        [Route("DeleteMenuItem/{id}")]
+        [HttpDelete]
         public async Task<ActionResult> DeleteMenuItem(int id)
         {
             await _menuItemService.DeleteMenuItemAsync(id);
@@ -41,16 +41,16 @@ namespace RestaurantApi.Controllers
             return Ok(menuItemList);
         }
 
-        [Route("GetMenuItemById")]
+        [Route("GetMenuItemById/{id}")]
         [HttpGet]
-        public async Task<ActionResult<MenuItem>> GetMenuItemById(int id)
+        public async Task<ActionResult<MenuItemDTO>> GetMenuItemById(int id)
         {
             var menuItem = await _menuItemService.GetMenuItemByIdAsync(id);
             return Ok(menuItem);
         }
 
-        [Route("UpdateMenuItem")]
-        [HttpPost]
+        [Route("UpdateMenuItem/{id}")]
+        [HttpPut]
         public async Task<ActionResult> UpdateMenuItem(int id, MenuItemDTO updatedMenuItem)
         {
             await _menuItemService.UpdateMenuItemAsync(id, updatedMenuItem);

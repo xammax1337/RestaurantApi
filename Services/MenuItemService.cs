@@ -42,7 +42,7 @@ namespace RestaurantApi.Services
             }).ToList();
         }
 
-        public async Task<MenuItem> GetMenuItemByIdAsync(int id)
+        public async Task<MenuItemDTO> GetMenuItemByIdAsync(int id)
         {
             var menuItem = await _menuItemRepo.GetMenuItemByIdAsync(id);
             if (menuItem == null)
@@ -50,14 +50,13 @@ namespace RestaurantApi.Services
                 return null;
             }
 
-            return new MenuItem
+            return new MenuItemDTO
             {
                 Id = menuItem.Id,
                 Name = menuItem.Name,
                 Description = menuItem.Description,
                 Price = menuItem.Price,
-                Available = menuItem.Available,
-                Menus = menuItem.Menus,
+                Available = menuItem.Available
             };
         }
 

@@ -24,8 +24,8 @@ namespace RestaurantApi.Controllers
             return Ok();
         }
 
-        [Route("DeleteTable")]
-        [HttpPost]
+        [Route("DeleteTable/{tableId}")]
+        [HttpDelete]
         public async Task<ActionResult> DeleteTable(int tableId)
         {
             await _tableService.DeleteTableAsync(tableId);

@@ -57,8 +57,7 @@ namespace RestaurantApi.Services
                 FirstName = customer.FirstName, 
                 LastName = customer.LastName, 
                 Email = customer.Email, 
-                PhoneNumber = customer.PhoneNumber, 
-                Bookings = customer.Bookings 
+                PhoneNumber = customer.PhoneNumber
             };
         }
 
@@ -76,8 +75,7 @@ namespace RestaurantApi.Services
                 FirstName = customer.FirstName,
                 LastName = customer.LastName,
                 Email = customer.Email,
-                PhoneNumber = customer.PhoneNumber,
-                Bookings = customer.Bookings
+                PhoneNumber = customer.PhoneNumber
             };
         }
 

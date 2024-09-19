@@ -23,8 +23,8 @@ namespace RestaurantApi.Controllers
             return Ok();
         }
 
-        [Route("DeleteCustomer")]
-        [HttpPost]
+        [Route("DeleteCustomer/{id}")]
+        [HttpDelete]
         public async Task<ActionResult> DeleteCustomer(int id)
         {
             await _customerService.DeleteCustomerAsync(id);
@@ -39,7 +39,7 @@ namespace RestaurantApi.Controllers
             return Ok(customerList);
         }
 
-        [Route("GetCustomerById")]
+        [Route("GetCustomerById/{id}")]
         [HttpGet]
         public async Task<ActionResult<CustomerDTO>> GetCustomer(int id) 
         {

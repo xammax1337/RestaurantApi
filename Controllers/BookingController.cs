@@ -23,7 +23,7 @@ namespace RestaurantApi.Controllers
         {
             try
             {
-                await _bookingService.CreateBookingAsync(request.CustomerId, request.BookingTime, request.SeatsRequired);
+                await _bookingService.CreateBookingAsync(request.Email, request.BookingTime, request.SeatsRequired);
                 return Ok();
             }
             catch (KeyNotFoundException ex)
@@ -36,8 +36,8 @@ namespace RestaurantApi.Controllers
             }
         }
 
-        [Route("DeleteBooking")]
-        [HttpPost]
+        [Route("DeleteBooking/{id}")]
+        [HttpDelete]
         public async Task<ActionResult> DeleteBooking(int id)
         {
             await _bookingService.DeleteBookingAsync(id);

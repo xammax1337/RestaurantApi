@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantApi.Data.Repositories.IRepositories;
 using RestaurantApi.Models;
+using RestaurantApi.Models.DTOs;
 
 namespace RestaurantApi.Data.Repositories
 {
@@ -29,7 +30,11 @@ namespace RestaurantApi.Data.Repositories
 
         public async Task<IEnumerable<Booking>> GetAllBookingsAsync()
         {
-            var bookingList = await _context.Bookings.ToListAsync();
+            var bookingList = await _context.Bookings
+                .Include(b => b.Table)
+                .Include(b => b.Customer)
+                .ToListAsync();
+                
             return bookingList;
         }
 
