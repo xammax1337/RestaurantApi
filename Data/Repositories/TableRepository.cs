@@ -13,16 +13,25 @@ namespace RestaurantApi.Data.Repositories
             _context = context;
         }
 
-        public async Task<Table> GetAvailableTableAsync(int seatsRequired)
+        public async Task<Table> GetAvailableTableAsync(int seatsRequired, DateTime bookingTime)
         {
-            var availableTables =  await _context.Tables
+            // Fetch tables with enough seats and are available
+            var availableTables = await _context.Tables
                 .Where(t => t.Seats >= seatsRequired)
-                .FirstOrDefaultAsync();
-            if (availableTables == null)
-            {
-                return null;
-            }
-            return availableTables;
+                .ToListAsync(); // Load into memory
+
+            // Fetch bookings within the next 2 hours
+            var conflictingBookings = await _context.Bookings
+                .Where(b => b.TimeBooked > bookingTime.AddHours(-2) && b.TimeBooked < bookingTime.AddHours(2))
+                .ToListAsync(); // Load into memory
+
+            // Find an available table that doesn't have a conflict
+            var availableTable = availableTables
+                .FirstOrDefault(table =>
+                    !conflictingBookings.Any(booking =>
+                        booking.TableId == table.TableId));
+
+            return availableTable;
         }
 
         public async Task UpdateTableAsync(Table table)
@@ -49,8 +58,20 @@ namespace RestaurantApi.Data.Repositories
 
         public async Task<IEnumerable<Table>> GetAllTablesAsync()
         {
-            var allTables = await _context.Tables.ToListAsync();
+            var allTables = await _context.Tables
+                .Include(t => t.Bookings)
+                .ToListAsync();
             return allTables;
+        }
+
+        public async Task<Table> GetTableByIdAsync(int id)
+        {
+            var table = await _context.Tables.FindAsync(id);
+            if (table == null)
+            {
+                return null;
+            }
+            return table;
         }
     }
 }

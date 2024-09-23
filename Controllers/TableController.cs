@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RestaurantApi.Models;
 using RestaurantApi.Models.DTOs;
+using RestaurantApi.Services;
 using RestaurantApi.Services.IServices;
 
 namespace RestaurantApi.Controllers
@@ -38,6 +39,14 @@ namespace RestaurantApi.Controllers
         {
             var allTables = await _tableService.GetAllTablesAsync();
             return Ok(allTables);
+        }
+
+        [Route("UpdateTable/{id}")]
+        [HttpPut]
+        public async Task<ActionResult> UpdateTable(int id, TableDTO updatedTable)
+        {
+            await _tableService.UpdateTableAsync(id, updatedTable);
+            return Ok();
         }
     }
 }

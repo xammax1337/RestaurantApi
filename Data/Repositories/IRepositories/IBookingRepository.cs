@@ -10,6 +10,6 @@ namespace RestaurantApi.Data.Repositories.IRepositories
         Task<Booking> GetBookingByIdAsync(int id); 
         Task<Booking> GetBookingByCustomerAsync(string customerName); 
         Task<List<Booking>> GetBookingByTableAsync(int tableId); 
-        Task UpdateBookingAsync(int id, Booking updatedBooking);
+        Task UpdateBookingAsync(Booking booking);
     }
 }

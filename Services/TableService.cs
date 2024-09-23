@@ -14,13 +14,19 @@ namespace RestaurantApi.Services
             _tableRepository = tableRepository;
         }
 
-        public async Task<Table> GetAvailableTableAsync(int seatsRequired)
+        public async Task<Table> GetAvailableTableAsync(int seatsRequired, DateTime bookingTime)
         {
-            return await _tableRepository.GetAvailableTableAsync(seatsRequired);
+            return await _tableRepository.GetAvailableTableAsync(seatsRequired, bookingTime);
         }
 
-        public async Task UpdateTableAsync(Table table)
+        public async Task UpdateTableAsync(int id, TableDTO updatedTable)
         {
+            var table = await _tableRepository.GetTableByIdAsync(id);
+
+            table.TableNumber = updatedTable.TableNumber;
+            table.Seats = updatedTable.Seats;
+            table.Available = updatedTable.Available;
+
             await _tableRepository.UpdateTableAsync(table);
         }
 
@@ -40,17 +46,39 @@ namespace RestaurantApi.Services
             await _tableRepository.DeleteTableAsync(tableId);
         }
 
-        public async Task<IEnumerable<Table>> GetAllTablesAsync()
+        public async Task<IEnumerable<ViewTableDTO>> GetAllTablesAsync()
         {
             var allTables = await _tableRepository.GetAllTablesAsync();
 
-            return allTables.Select(t => new Table
+            return allTables.Select(t => new ViewTableDTO
             {
                 TableId = t.TableId,
                 TableNumber = t.TableNumber,
                 Seats = t.Seats,
                 Available = t.Available,
+                Bookings = t.Bookings.Select(b => new ViewTableBookingDTO
+                {
+                    Id = b.Id,
+                    TimeBooked = b.TimeBooked,
+                    CustomerCount = b.CustomerCount
+                }).ToList()
             }).ToList();
+        }
+
+        public async Task<TableDTO> GetTableByIdAsync(int id)
+        {
+            var table = await _tableRepository.GetTableByIdAsync(id);
+            if (table == null)
+            {
+                return null;
+            }
+
+            return new TableDTO
+            {
+                TableNumber = table.TableNumber,
+                Seats = table.Seats,
+                Available = table.Available
+            };
         }
     }
 }

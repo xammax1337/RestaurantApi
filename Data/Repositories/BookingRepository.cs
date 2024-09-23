@@ -62,21 +62,10 @@ namespace RestaurantApi.Data.Repositories
             return booking;
         }
 
-        public async Task UpdateBookingAsync(int id, Booking updatedBooking)
+        public async Task UpdateBookingAsync(Booking booking)
         {
-            var booking = await _context.Bookings.FindAsync(id);
-
-            if (booking == null)
-            {
-                throw new KeyNotFoundException($"Booking with ID: {id} was not found");
-            }
-
-            booking.TimeBooked = updatedBooking.TimeBooked;
-            booking.CustomerCount = updatedBooking.CustomerCount;
-            booking.TableId = updatedBooking.TableId;
-
+            _context.Bookings.Update(booking);
             await _context.SaveChangesAsync();
-
         }
     }
 }

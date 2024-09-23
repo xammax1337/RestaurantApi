@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestaurantApi.Models;
+using RestaurantApi.Models.DTOs;
 using RestaurantApi.Services;
 using RestaurantApi.Services.IServices;
 
@@ -74,6 +75,14 @@ namespace RestaurantApi.Controllers
         {
             var booking = await _bookingService.GetBookingByTableAsync(tableNumber);
             return Ok(booking);
+        }
+
+        [Route("UpdateBooking/{id}")]
+        [HttpPut]
+        public async Task<ActionResult> UpdateBooking(int id, UpdateBookingDTO updatedBooking)
+        {
+            await _bookingService.UpdateBookingAsync(id, updatedBooking);
+            return Ok();
         }
     }
 }
