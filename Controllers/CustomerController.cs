@@ -47,11 +47,11 @@ namespace RestaurantApi.Controllers
             return Ok(customer);
         }
 
-        [Route("UpdateCustomer")]
-        [HttpPost]
-        public async Task<ActionResult> UpdateCustomer(CustomerDTO customer)
+        [Route("UpdateCustomer/{id}")]
+        [HttpPut]
+        public async Task<ActionResult> UpdateCustomer(int id, CustomerDTO updatedCustomer)
         {
-            await _customerService.UpdateCustomerAsync(customer);
+            await _customerService.UpdateCustomerAsync(id, updatedCustomer);
             return Ok();
         }
     }

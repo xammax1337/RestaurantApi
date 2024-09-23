@@ -16,7 +16,7 @@ namespace RestaurantApi.Data.Repositories
         public async Task<Table> GetAvailableTableAsync(int seatsRequired)
         {
             var availableTables =  await _context.Tables
-                .Where(t => t.Seats >= seatsRequired && t.Available)
+                .Where(t => t.Seats >= seatsRequired)
                 .FirstOrDefaultAsync();
             if (availableTables == null)
             {

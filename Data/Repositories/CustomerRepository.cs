@@ -47,11 +47,10 @@ namespace RestaurantApi.Data.Repositories
             return customer;
         }
 
-        public Task UpdateCustomerAsync(Customer customer)
+        public async Task UpdateCustomerAsync(Customer customer)
         {
             _context.Customers.Update(customer);
-            _context.SaveChanges();
-            return Task.CompletedTask;
+            await _context.SaveChangesAsync();
         }
     }
 }

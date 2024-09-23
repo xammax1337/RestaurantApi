@@ -34,6 +34,21 @@ namespace RestaurantApi.Services
                 throw new KeyNotFoundException($"No tables with {seatsRequired} seats available found");
             }
 
+            var existingBookings = await _bookingRepository.GetBookingByTableAsync(table.TableId);
+
+            // Check for time conflicts (within 2 hours before or after the new booking time)
+            foreach (var existingBooking in existingBookings)
+            {
+                // Calculate the time difference
+                var timeDifference = Math.Abs((existingBooking.TimeBooked - bookingTime).TotalHours);
+
+                // If the difference is less than 2 hours, the table is considered unavailable
+                if (timeDifference < 2)
+                {
+                    throw new InvalidOperationException($"Table is unavailable at the requested time. Existing booking at {existingBooking.TimeBooked}.");
+                }
+            }
+
             var booking = new Booking
             {
                 TimeBooked = bookingTime,
@@ -95,9 +110,9 @@ namespace RestaurantApi.Services
             return await _bookingRepository.GetBookingByCustomerAsync(customerName);
         }
 
-        public async Task<Booking> GetBookingByTableAsync(int tableNumber)
+        public async Task<List<Booking>> GetBookingByTableAsync(int tableId)
         {
-            return await _bookingRepository.GetBookingByTableAsync(tableNumber);
+            return await _bookingRepository.GetBookingByTableAsync(tableId);
         }
 
         public async Task UpdateBookingAsync(int id, Booking updatedBooking)

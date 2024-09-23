@@ -79,15 +79,16 @@ namespace RestaurantApi.Services
             };
         }
 
-        public async Task UpdateCustomerAsync(CustomerDTO customer)
+        public async Task UpdateCustomerAsync(int id, CustomerDTO updatedCustomer)
         {
-            var updateCustomer = new Customer
-            {
-                FirstName = customer.FirstName,
-                LastName = customer.LastName,
-                Email = customer.Email,
-            };
-            await _customerRepo.UpdateCustomerAsync(updateCustomer);
+            var customer = await _customerRepo.GetCustomerByIdAsync(id);
+            
+            customer.FirstName = updatedCustomer.FirstName;
+            customer.LastName = updatedCustomer.LastName;
+            customer.Email = updatedCustomer.Email;
+            customer.PhoneNumber = updatedCustomer.PhoneNumber;
+
+            await _customerRepo.UpdateCustomerAsync(customer);
         }
     }
 }

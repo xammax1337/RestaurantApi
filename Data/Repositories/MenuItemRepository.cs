@@ -48,6 +48,5 @@ namespace RestaurantApi.Data.Repositories
             _context.MenuItems.Update(menuItem);
             await _context.SaveChangesAsync();
         }
-
     }
 }
