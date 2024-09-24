@@ -53,7 +53,7 @@ namespace RestaurantApi.Controllers
             return Ok(bookings);
         }
 
-        [Route("GetBookingById")]
+        [Route("GetBookingById/{id}")]
         [HttpGet]
         public async Task<ActionResult> GetBookingById(int id)
         {
