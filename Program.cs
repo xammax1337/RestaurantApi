@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using RestaurantApi.Data;
 using RestaurantApi.Data.Repositories;
 using RestaurantApi.Data.Repositories.IRepositories;
+using RestaurantApi.Models;
 using RestaurantApi.Services;
 using RestaurantApi.Services.IServices;
 using System.Text;
@@ -16,6 +18,11 @@ builder.Services.AddDbContext<RestaurantContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+//Added identity and appuser for the database
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<RestaurantContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
