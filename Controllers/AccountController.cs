@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RestaurantApi.Models;
 using RestaurantApi.Services.IServices;
 
 namespace RestaurantApi.Controllers
@@ -14,10 +15,10 @@ namespace RestaurantApi.Controllers
             _authService = authService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Login(string email, string password)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
-            var token = await _authService.LoginAsync(email, password);
+            var token = await _authService.LoginAsync(model.Email, model.Password);
             if (token != null)
             {
                 return Ok(new { Token = token });
@@ -25,10 +26,10 @@ namespace RestaurantApi.Controllers
             return Unauthorized();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Register(string email, string password, string role)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            await _authService.RegisterAsync(email, password, role);
+            await _authService.RegisterAsync(model.Email, model.Password);
             return Ok();
         }
     }

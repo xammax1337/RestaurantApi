@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestaurantApi.Models;
 using RestaurantApi.Models.DTOs;
@@ -7,6 +8,7 @@ using RestaurantApi.Services.IServices;
 
 namespace RestaurantApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MenuController : ControllerBase
@@ -23,8 +25,8 @@ namespace RestaurantApi.Controllers
         {
             await _menuItemService.AddMenuItemAsync(menuItem);
             return Ok();
-        }        
-        
+        }
+
         [Route("DeleteMenuItem/{id}")]
         [HttpDelete]
         public async Task<ActionResult> DeleteMenuItem(int id)
@@ -35,6 +37,7 @@ namespace RestaurantApi.Controllers
 
         [Route("GetAllMenuItems")]
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<MenuItemDTO>>> GetAllMenuItems()
         {
             var menuItemList = await _menuItemService.GetAllMenuItemsAsync();

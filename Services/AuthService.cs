@@ -13,6 +13,7 @@ namespace RestaurantApi.Services
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly string _jwtKey;
         private readonly string _jwtIssuer;
+        private readonly string _jwtAudience;
 
         public AuthService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IConfiguration configuration)
         {
@@ -20,6 +21,7 @@ namespace RestaurantApi.Services
             _signInManager = signInManager;
             _jwtKey = configuration["Jwt:Key"];
             _jwtIssuer = configuration["Jwt:Issuer"];
+            _jwtAudience = configuration["Jwt:Audience"];
         }
 
         public async Task<string> LoginAsync(string email, string password)
@@ -33,16 +35,26 @@ namespace RestaurantApi.Services
             return null;
         }
 
-        public async Task RegisterAsync(string email, string password, string role)
+        public async Task RegisterAsync(string email, string password)
         {
             var user = new IdentityUser { UserName = email, Email = email };
             var result = await _userManager.CreateAsync(user, password);
 
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, role);
+                var roleResult = await _userManager.AddToRoleAsync(user, "User");
+                if (!roleResult.Succeeded)
+                {
+                    throw new Exception($"Failed to assign role 'User' to user: {string.Join(", ", roleResult.Errors.Select(e => e.Description))}");
+                }
+            }
+            else
+            {
+                // Log or return user creation failure
+                throw new Exception("User creation failed: " + string.Join(", ", result.Errors.Select(e => e.Description)));
             }
         }
+
 
         public async Task<bool> IsUserInRoleAsync(string email, string role)
         {
@@ -54,23 +66,29 @@ namespace RestaurantApi.Services
 
         private string GenerateJwtToken(IdentityUser user)
         {
-            var claims = new[]
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(_jwtKey);
+            var issuer = _jwtIssuer;
+            var audience = _jwtAudience;
+
+            var claims = new ClaimsIdentity(new[]
             {
-            new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        };
+                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                 new Claim(ClaimTypes.Role, "Admin"),
+                 new Claim(ClaimTypes.Email, user.Email)
+            });
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtKey));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = claims,
+                Expires = DateTime.UtcNow.AddHours(1),
+                Issuer = issuer,
+                Audience = audience,
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
+            };
 
-            var token = new JwtSecurityToken(
-                _jwtIssuer,
-                _jwtIssuer,
-                claims,
-                expires: DateTime.UtcNow.AddHours(1),
-                signingCredentials: creds);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
     }
 }
