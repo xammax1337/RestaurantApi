@@ -22,6 +22,7 @@ namespace RestaurantApi.Controllers
 
         [Route("CreateBooking")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult> CreateBooking([FromBody] CreateBookingRequest request)
         {
             try

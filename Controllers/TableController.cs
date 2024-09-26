@@ -37,6 +37,7 @@ namespace RestaurantApi.Controllers
 
         [Route("GetAllTables")]
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult> GetAllTables()
         {
             var allTables = await _tableService.GetAllTablesAsync();
